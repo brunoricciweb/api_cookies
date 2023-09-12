@@ -4,6 +4,7 @@ const path = require('path')
 const port = 3000
 app.use(express.json());
 var cookieParser = require('cookie-parser')
+app.use(cookieParser());
 
 
 app.get('/', (req, res) => { // devolver todos los productos
