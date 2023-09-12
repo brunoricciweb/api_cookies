@@ -41,7 +41,7 @@ function middlewareAutenticacion(req, res, next){
 // endpoint que necesita autenticación
 app.get('/seguro', middlewareAutenticacion ,(req, res, next) => { // devolver todos los productos
     console.log('entró a GET /seguro')
-    res.send('Endpoint seguro');
+    res.send(`Endpoint seguro. Usuario: ${req.cookies.username}`);
 })
 
 /////////////////////////////////////////////
