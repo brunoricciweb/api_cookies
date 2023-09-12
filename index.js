@@ -8,10 +8,16 @@ app.use(cookieParser());
 
 var fakeDB = {
     'bruno_web': {
-        productos: []
+        productos: [{'nombre': 'producto bruno'}]
     },
     'ariel123':{
-        productos: []
+        productos: [{'nombre': 'producto de ariel'}]
+    },
+    'fatima123':{
+        productos: [{'nombre': 'producto fatima123'}]
+    },
+    'magali123':{
+        productos: [{'nombre': 'producto de magali123'}]
     }
 }
 
@@ -35,13 +41,28 @@ app.get('/read_cookie',function(req, res){
 function middlewareAutenticacion(req, res, next){
     console.log('Este es el middleware!');
     console.log('Usuario en la cookie:', req.cookies.username);
-    next();
+    if(req.cookies.username == undefined){
+        res.send('No estás autenticado.')
+    } else {
+        next();
+    }
 }
 
 // endpoint que necesita autenticación
 app.get('/seguro', middlewareAutenticacion ,(req, res, next) => { // devolver todos los productos
     console.log('entró a GET /seguro')
     res.send(`Endpoint seguro. Usuario: ${req.cookies.username}`);
+})
+
+app.get('/productos',middlewareAutenticacion ,(req, res, next) => { // devolver todos los productos
+    console.log('entró a GET /productos')
+
+    let nombreUsuario = req.cookies.username;
+
+    
+
+    // mandarle la variable con todos los productos.
+    res.send( fakeDB[ nombreUsuario ].productos );
 })
 
 /////////////////////////////////////////////
