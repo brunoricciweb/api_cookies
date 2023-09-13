@@ -7,16 +7,16 @@ var cookieParser = require('cookie-parser')
 app.use(cookieParser());
 
 var fakeDB = {
-    'bruno_web': {
+    bruno_web: {
         productos: [{'nombre': 'producto bruno'}]
     },
-    'ariel123':{
+    ariel123:{
         productos: [{'nombre': 'producto de ariel'}]
     },
-    'fatima123':{
+    fatima123:{
         productos: [{'nombre': 'producto fatima123'}]
     },
-    'magali123':{
+    magali123:{
         productos: [{'nombre': 'producto de magali123'}]
     }
 }
@@ -28,7 +28,7 @@ app.get('/', (req, res) => { // devolver todos los productos
 
 app.get('/set_cookie',function(req, res){
     var cookie_name = 'username'
-    res.cookie(cookie_name , 'ariel123').send('Cookie is set');
+    res.cookie(cookie_name , 'magali123').send('Cookie is set');
 });
 
 app.get('/read_cookie',function(req, res){
@@ -58,14 +58,22 @@ app.get('/productos',middlewareAutenticacion ,(req, res, next) => { // devolver 
     console.log('entró a GET /productos')
 
     let nombreUsuario = req.cookies.username;
-
-    
-
     // mandarle la variable con todos los productos.
+    //res.send( fakeDB.nombreUsuario.productos );
     res.send( fakeDB[ nombreUsuario ].productos );
 })
 
-/////////////////////////////////////////////
+
+app.post('/producto',(req,res)=>{   // POST /producto  -> crear producto nuevo
+    console.log('entró a POST /producto', req.body );
+
+    let nombreUsuario = req.cookies.username;
+    fakeDB[nombreUsuario].productos.push(req.body);
+    //productos.push( req.body );
+    res.send(`Producto creado en el usuario ${nombreUsuario}`);
+})
+
+////////////////////////////////////////////`
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
