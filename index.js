@@ -52,6 +52,11 @@ app.get('/read_cookie',function(req, res){
     res.send(req.cookies);
 });
 
+app.post('/login',function(req, res){
+    var cookie_name = 'username'
+    res.cookie(cookie_name , 'magali123').send('Cookie is set');
+});
+
 
 
 function middlewareAutenticacion(req, res, next){
@@ -76,16 +81,26 @@ app.get('/productos',middlewareAutenticacion ,(req, res, next) => { // devolver 
     let nombreUsuario = req.cookies.username;
     // mandarle la variable con todos los productos.
     //res.send( fakeDB.nombreUsuario.productos );
-    res.send( fakeDB[ nombreUsuario ].productos );
+    res.send( fakeDB.nombreUsuario.productos );
 })
 
 
-app.post('/producto',(req,res)=>{   // POST /producto  -> crear producto nuevo
+app.post('/producto',middlewareAutenticacion ,(req,res, next)=>{   // POST /producto  -> crear producto nuevo
     console.log('entró a POST /producto', req.body );
 
     let nombreUsuario = req.cookies.username;
-    fakeDB[nombreUsuario].productos.push(req.body);
+    fakeDB.nombreUsuario.productos.push(req.body);
     //productos.push( req.body );
+    res.send(`Producto creado en el usuario ${nombreUsuario}`);
+})
+
+app.delete('/producto/:indice',middlewareAutenticacion ,(req,res, next)=>{   // POST /producto  -> crear producto nuevo
+    console.log('entró a DELETE /producto', req.body );
+
+    let nombreUsuario = req.cookies.username;
+    
+    fakeDB.nombreUsuario.productos.splice(req.params.indice, 1);
+    
     res.send(`Producto creado en el usuario ${nombreUsuario}`);
 })
 
