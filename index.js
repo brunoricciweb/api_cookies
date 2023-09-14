@@ -6,18 +6,34 @@ app.use(express.json());
 var cookieParser = require('cookie-parser')
 app.use(cookieParser());
 
-var fakeDB = {
+fakeDB = {
     bruno_web: {
-        productos: [{'nombre': 'producto bruno'}]
+        productos: [
+        	{
+        		nombre: 'producto bruno', precio: 12331.85, stock:58
+          }
+        ]
     },
     ariel123:{
-        productos: [{'nombre': 'producto de ariel'}]
+        productos: [
+        	{
+        		nombre: 'producto de ariel', precio: 12331.85, stock:58
+          }
+        ]
     },
     fatima123:{
-        productos: [{'nombre': 'producto fatima123'}]
+        productos: [
+        	{
+        		nombre: 'producto fatima123', precio: 12331.85, stock:58
+          }
+        ]
     },
     magali123:{
-        productos: [{'nombre': 'producto de magali123'}]
+        productos: [
+        	{
+        		nombre: 'producto de magali123',precio: 12331.85, stock:58
+          }
+        ]
     }
 }
 
